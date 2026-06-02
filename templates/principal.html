@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Panel Principal</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+            color: #333333;
+        }
+
+        .contenido {
+            width: 400px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #cccccc;
+            text-align: center;
+        }
+
+        p {
+            font-size: 15px;
+            color: #555555;
+        }
+
+        a {
+            display: block;
+            width: 200px;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        a:hover {
+            background-color: #1976D2;
+        }
+
+        .salir {
+            background-color: #f44336;
+        }
+
+        .salir:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Panel Principal</h2>
+
+    <div class="contenido">
+        <p>Bienvenido, <strong>{{ nombre }}</strong></p>
+        <p>Que deseas hacer?</p>
+
+        <a href="/buscador">Ir al Buscador de Productos</a>
+        <a href="/logout" class="salir">Salir del Sistema</a>
+    </div>
+
+</body>
+</html>

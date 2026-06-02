@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 50px;
+            color: #333333;
+        }
+
+        .formulario {
+            width: 300px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #cccccc;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 6px;
+            margin-top: 4px;
+            border: 1px solid #aaaaaa;
+            font-size: 14px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            margin-top: 15px;
+            padding: 8px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+            font-size: 12px;
+            color: gray;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Inicio de Sesion</h2>
+
+    <div class="formulario">
+
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" action="/login">
+            <label>Usuario:</label>
+            <input type="text" name="username" placeholder="Ingresa tu usuario">
+
+            <label>Contrasena:</label>
+            <input type="password" name="password" placeholder="Ingresa tu contrasena">
+
+            <input type="submit" value="Ingresar">
+        </form>
+
+        <p>usuarios de prueba: admin / admin123</p>
+
+    </div>
+
+</body>
+</html>

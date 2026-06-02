@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buscador de Productos</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+            color: #333333;
+        }
+
+        .contenido {
+            width: 450px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #cccccc;
+        }
+
+        label {
+            font-size: 14px;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 6px;
+            border: 1px solid #aaaaaa;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 7px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #dddddd;
+            background-color: #fafafa;
+            font-size: 14px;
+            display: none;
+        }
+
+        #resultado table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #resultado table td {
+            padding: 6px;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        #resultado table td:first-child {
+            font-weight: bold;
+            width: 35%;
+            color: #555;
+        }
+
+        .error-msg {
+            color: red;
+            font-size: 13px;
+        }
+
+        .botones {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        a {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 14px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        a:hover {
+            background-color: #1976D2;
+        }
+
+        .salir {
+            background-color: #f44336;
+        }
+
+        .salir:hover {
+            background-color: #d32f2f;
+        }
+
+        .hint {
+            font-size: 12px;
+            color: gray;
+            margin-top: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Buscador de Productos</h2>
+
+    <div class="contenido">
+
+        <label>Codigo del producto:</label><br><br>
+        <input type="text" id="codigoInput" placeholder="Ej: P001">
+        <button onclick="buscar()">Buscar</button>
+        <p class="hint">Codigos disponibles: P001, P002, P003, P004, P005, P006, P007, P008</p>
+
+        <div id="resultado"></div>
+
+        <div class="botones">
+            <a href="/principal">Regresar al Panel</a>
+            <a href="/logout" class="salir">Salir del Sistema</a>
+        </div>
+
+    </div>
+
+    <script>
+        function buscar() {
+            var codigo = document.getElementById('codigoInput').value;
+            var div = document.getElementById('resultado');
+
+            if (codigo == '') {
+                div.style.display = 'block';
+                div.innerHTML = '<p class="error-msg">Por favor ingresa un codigo.</p>';
+                return;
+            }
+
+            div.style.display = 'block';
+            div.innerHTML = 'Buscando...';
+
+            fetch('/api/buscar_producto', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ codigo: codigo })
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                if (data.encontrado) {
+                    div.innerHTML =
+                        '<b>Producto encontrado:</b><br><br>' +
+                        '<table>' +
+                        '<tr><td>Codigo:</td><td>' + data.codigo + '</td></tr>' +
+                        '<tr><td>Nombre:</td><td>' + data.nombre + '</td></tr>' +
+                        '<tr><td>Descripcion:</td><td>' + data.descripcion + '</td></tr>' +
+                        '<tr><td>Precio:</td><td>S/ ' + data.precio.toFixed(2) + '</td></tr>' +
+                        '<tr><td>Stock:</td><td>' + data.stock + ' unidades</td></tr>' +
+                        '<tr><td>Categoria:</td><td>' + data.categoria + '</td></tr>' +
+                        '</table>';
+                } else {
+                    div.innerHTML = '<p class="error-msg">No se encontro el producto: ' + codigo + '</p>';
+                }
+            })
+            .catch(function() {
+                div.innerHTML = '<p class="error-msg">Error al conectar con el servidor.</p>';
+            });
+        }
+    </script>
+
+</body>
+</html>
